@@ -64,7 +64,10 @@ top: true
 
 # Miscellaneous
 baidu_analytics: ''
-google_analytics: ''
+google_analytics:
+  enable: true
+  id: UA-102681606-1
+  site: auto
 favicon: /favicon.png
 
 #你的头像url
