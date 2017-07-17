@@ -3,7 +3,7 @@ title: 包含有某key的Map无法得到该key对应的value值
 ---
 
 ## 代码示例
-```
+``` java
 Map<String, String> map = Maps.newHashMap();
 map.put("107693789", "s1");
 map.put("500140553", "1");
