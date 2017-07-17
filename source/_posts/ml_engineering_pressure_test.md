@@ -2,7 +2,10 @@
 title: 机器学习工程压测
 ---
 
-![](/img/engineering_pressure_test.jpg)
+<div  align="center">
+     <img src="./img/engineering_pressure_test.jpg" width = "100%" height = "100%" alt="压测数据" align=center />
+</div>
+<!-- ![](/img/engineering_pressure_test.jpg) -->
 ## 压测方式
 将真实线上用户灰度到测试组机器。
 
