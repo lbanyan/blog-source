@@ -2,7 +2,7 @@
 title: 机器学习工程压测
 ---
 
-![](/images/engineering_pressure_test.jpg)
+![](/img/engineering_pressure_test.jpg)
 ## 压测方式
 将真实线上用户灰度到测试组机器。
 
