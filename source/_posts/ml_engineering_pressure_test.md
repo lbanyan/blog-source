@@ -1,5 +1,8 @@
 ---
 title: 机器学习工程压测
+tags:
+    - 机器学习
+    - 压测
 ---
 
 ![](/img/engineering_pressure_test.jpg)

@@ -1,5 +1,9 @@
 ---
 title: WIN 10下PyCharm安装包时报Permission denied
+tags:
+    - WIN 10
+    - PyCharm
+    - Permission denied
 ---
 
 ## 错误trace

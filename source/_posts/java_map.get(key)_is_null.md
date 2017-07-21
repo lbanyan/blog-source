@@ -1,5 +1,8 @@
 ---
 title: JAVA：包含有某key的Map无法得到该key对应的value值
+tags:
+    - JAVA
+    - JAVA.Map
 ---
 
 ## 代码示例
