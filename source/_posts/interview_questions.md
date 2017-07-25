@@ -17,5 +17,3 @@ title: 面试题汇总
 13. 一个对象占用的内存大小，GC的算法详细。
 14. Spring的事务管理。
 15. Java equals和hascode
-
-
