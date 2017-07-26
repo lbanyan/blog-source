@@ -10,7 +10,7 @@ Ribbon原理及代码解析可参考： [Spring Cloud源码分析（二）Ribbon
 ## 业务背景
 如下图所示：
 ![](/img/matching_ranking.png)
-Matching服务请求各宿主机上的Ranking服务来完成任务，Ranking服务提供的是HTTP的接口，Matching和Ranking在同一个机房，Matching可以通过http://ip:port/ranking的方式访问到各Ranking服务。具体Matching和Ranking是做什么的，可以不需要知道。
+Matching服务请求各宿主机上的Ranking服务来完成任务，Ranking服务提供的是HTTP的接口，Matching和Ranking在同一个机房，Matching可以通过http://ip:port/ranking 的方式访问到各Ranking服务。具体Matching和Ranking是做什么的，可以不需要知道。
 为了实现Matching到Ranking的合理调度，我们使用了Ribbon。
 
 ## 具体实现
@@ -63,7 +63,7 @@ public class RankingPing implements IPing {
 }
 ```
 预发布环境和正式环境在同一机房中，预发布环境不对外提供服务且只有一个Matching服务。此处如此设计，是一种优化手段，正式环境的Matching服务有多台，没必要每台都进行对Ranking server服务的直接检测，仅根据服务异常集合就可以判断此server是否正常了即可，否则，会对Ranking各服务造成压力。同时由于只有预发布环境的一个Matching服务做此检测，在发送告警时，也很好的避免了大量重复告警。
-由于Ranking服务数数百个，在Ranking发布新版本时，我们仍然会收到大量的server不可用告警，优化的办法是，在第2步告警之前，使用全局的AtomicLongMap<String>.incrementAndGet(server.host + ":" + server.port)，在此返回值小于5的情况下告警，否则不告警；在第3步server服务正常时，使用AtomicLongMap<String>.remove(server.host + ":" + server.port)清理掉此server即可。之所以使用AtomicLongMap，是由于作为全局变量，对其的操作应该是线程安全的。
+由于Ranking服务数数百个，在Ranking发布新版本时，我们仍然会收到大量的server不可用告警，优化的办法是，在第2步告警之前，使用全局的AtomicLongMap&lt;String&gt;.incrementAndGet(server.host + ":" + server.port)，在此返回值小于5的情况下告警，否则不告警；在第3步server服务正常时，使用AtomicLongMap&lt;String&gt;.remove(server.host + ":" + server.port)清理掉此server即可。之所以使用AtomicLongMap，是由于作为全局变量，对其的操作应该是线程安全的。
 
 ### 动态服务列表RankingServerList
 ``` java
