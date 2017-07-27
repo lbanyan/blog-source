@@ -8,6 +8,9 @@ title: Java项目越运行越慢的问题分析
 ## 分析
 程序方面看不出有什么问题，于是我从JVM层面看看发生了什么。
 可以参考以下两篇文章，我就不重复造轮子了：
+
+<!--more-->
+
 [JVM性能调优监控工具jps、jstack、jmap、jhat、jstat、hprof使用详解](https://my.oschina.net/feichexia/blog/196575)
 [java命令--jmap命令使用](http://www.cnblogs.com/kongzhongqijing/articles/3621163.html)
 在我执行jps命令时，报错： **process information unavailable**，这个是因为查看的进程非当前用户下的进程，可以使用以下命令来执行：
