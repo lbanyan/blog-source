@@ -1,5 +1,9 @@
 ---
 title: Java项目越运行越慢的问题分析
+tags:
+    - Java
+    - jmap
+    - jviusalvm
 ---
 
 ## 现象
