@@ -8,8 +8,7 @@ menu:
 subnav:
   github: "https://github.com/lbanyan"
   #weibo: "#"
-  #rss: "#"
-  zhihu: "https://www.zhihu.com/people/xingping/activities"
+  #zhihu: "https://www.zhihu.com/people/xingping/activities"
   #qq: "#"
   #weixin: "#"
   #jianshu: "#"
@@ -18,6 +17,7 @@ subnav:
   #bilibili: "#"
   #acfun: "#"
   mail: "mailto:zhxingping@gmail.com"
+  #rss: "#"
   #facebook: "#"
   #google: "#"
   #twitter: "#"

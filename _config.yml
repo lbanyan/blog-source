@@ -89,6 +89,11 @@ deploy:
   repo: git@github.com:lbanyan/lbanyan.github.io.git
   branch: master
 
+feed:
+  type: atom
+  path: atom.xml
+  limit: 100
+
 jsonContent:
   meta: false
   pages: false

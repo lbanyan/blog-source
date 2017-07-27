@@ -5,13 +5,15 @@ tags:
   - 负载均衡
 ---
 
-Ribbon原理及代码解析可参考： [Spring Cloud源码分析（二）Ribbon](http://blog.didispace.com/springcloud-sourcecode-ribbon/) ，本文仅简单介绍我们在生产环境中如何使用。
+Ribbon原理及代码解析可参考： [Spring Cloud源码分析（二）Ribbon](http://blog.didispace.com/springcloud-sourcecode-ribbon/) ，本文仅简单介绍我们在生产环境中如何使用DynamicServerListLoadBalancer。
 
 ## 业务背景
 如下图所示：
 ![](/img/matching_ranking.png)
 Matching服务请求各宿主机上的Ranking服务来完成任务，Ranking服务提供的是HTTP的接口，Matching和Ranking在同一个机房，Matching可以通过http://ip:port/ranking 的方式访问到各Ranking服务。具体Matching和Ranking是做什么的，可以不需要知道。
 为了实现Matching到Ranking的合理调度，我们使用了Ribbon。
+
+<!--more-->
 
 ## 具体实现
 ### 负载均衡器的主体RankingLB类
