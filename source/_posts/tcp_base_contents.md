@@ -16,5 +16,5 @@ tags:
 ``` bash
 netstat -na | grep 8081
 ```
-使用Wireshark观察TCP连接：
+使用Wireshark观察TCP连接的例子：
 ![](/img/wireshark_tcp.png)
