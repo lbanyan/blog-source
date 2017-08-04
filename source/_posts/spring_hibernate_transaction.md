@@ -52,5 +52,5 @@ public <T extends AbstractEntity> T save(String user, T entity, boolean flush) {
 ```
 以下是经验之谈。平台在大多数资源相关的数据库表中增加了createBy、createTime、updateBy、updateTime，这种设计给平台带来了极大的好处，可以很容易地找出是谁操作的资源及操作的时间点；如果出现异常，也可以较容易地定位现场；再配合审计流程，基本上就可以掌控整个平台的每一个动作，从而明确了责任归属，也为后期的计费系统做足了数据保证。
 通过以上方式您可以随意构造任意大小的事务。
-额外的基础知识参考： [Spring事务传播性与隔离级别](https://my.oschina.net/dongli/blog/56904)，七种传播特性，四种隔离级别。
+额外的基础知识参考： [Spring事务配置及事务的传播性与隔离级别详解](http://opiece.me/2016/03/18/spring-transactional-introduce/)，七种传播特性，四种隔离级别。
 
