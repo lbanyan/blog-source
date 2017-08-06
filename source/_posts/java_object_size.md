@@ -11,7 +11,7 @@ title: JAVA：获取一个对象的大小
 
 获取一个对象的大小方法很多，这里介绍两个简单的方法。
 ## 使用jmap获取
-可参考我的博客[Java项目越运行越慢的问题分析](https://lbanyan.github.io/2017/07/27/java_slower_and_slower/)
+可参考我的博客[Java项目越运行越慢的问题分析](https://lbanyan.github.io/2017/07/27/java_slower_and_slower/)，这个也是一个内存泄漏的例子。
 
 ``` bash
 jmap -histo pid
@@ -26,4 +26,5 @@ jmap -histo pid
 ```
 更多内容可以参看这里 [查看 Java 对象大小](http://github.thinkingbar.com/lookup-objsize/)
 
-
+引申内容： [内存泄漏和内存溢出有啥区别？](https://www.zhihu.com/question/40560123)
+内存泄漏是说程序中有应该回收的对象而未被回收，内存溢出是说当前分配的内存不够用了。内存泄漏严重可能会导致内存溢出。
