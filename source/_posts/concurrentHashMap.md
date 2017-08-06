@@ -10,6 +10,8 @@ tags:
 - [探索 ConcurrentHashMap 高并发性的实现机制](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/index.html)
  - [ReentrantLock与synchronized](http://uule.iteye.com/blog/1488356)
 
+ <!--more-->
+
 ## 总结
 - JAVA存储模型的Happens-Before规则：
     - 监视器锁法则：对一个监视器锁的解锁 happens-before于每一个后续对同一监视器锁的加锁。

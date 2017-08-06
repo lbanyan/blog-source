@@ -7,6 +7,8 @@ title: JAVA：获取一个对象的大小
 - 用于项目中缓存的规划
 - 用于检查项目内存泄漏的原因
 
+<!--more-->
+
 获取一个对象的大小方法很多，这里介绍两个简单的方法。
 ## 使用jmap获取
 可参考我的博客[Java项目越运行越慢的问题分析](https://lbanyan.github.io/2017/07/27/java_slower_and_slower/)
