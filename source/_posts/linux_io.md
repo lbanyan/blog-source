@@ -13,6 +13,7 @@ epoll有回调、fd数不受限制、fd只用拷贝一次
 包含文件指针
 - [epool边缘触发和水平触发](http://www.cnblogs.com/yuuyuu/p/5103744.html)
 读写缓冲区太小，fd上有可读内容，水平触发每次都触发，边缘触发只触发一次。
+- [关于io模型](https://www.zybuluo.com/wangjialin/note/697702)
 
 
 

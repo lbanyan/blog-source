@@ -13,7 +13,7 @@ tags:
  <!--more-->
 
 ## 总结
-- JAVA存储模型的Happens-Before规则：
+- Java存储模型的Happens-Before规则：
     - 监视器锁法则：对一个监视器锁的解锁 happens-before于每一个后续对同一监视器锁的加锁。
     - volatile变量法则：对volatile域的写入操作happens-before于每一个后续对同一个域的读写操作。
 - 编译器的重排序。
