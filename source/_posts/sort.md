@@ -1,6 +1,6 @@
 ---
 title: 高效排序解决方案
-tags：
+tags:
     - Redis
     - 有序集合
     - ConcurrentSkipListMap
