@@ -39,13 +39,13 @@ ZADD和ZREM的时间复杂度都是O(n)，ZREVRANGE在固定去前1000个时，�
 简单的测试样例如下：
 ``` java
 ConcurrentSkipListMap<String, Long> map = new ConcurrentSkipListMap<>();
-    map.put("a", 1l);
-    map.put("c", 2l);
-    map.put("b", 3l);
-    for(String entry : map.descendingKeySet()) {
-        System.out.println(entry);
-    }
-    System.out.println(map);
+map.put("a", 1l);
+map.put("c", 2l);
+map.put("b", 3l);
+for(String entry : map.descendingKeySet()) {
+    System.out.println(entry);
+}
+System.out.println(map);
 ```
 注意ConcurrentSkipListMap是根据key的Comparator来比较的，而非根据value来比较，具体可以参考 [并发容器Map之二：ConcurrentSkipListMap](http://www.cnblogs.com/duanxz/archive/2012/08/27/2658004.html)
 该方案完全利用了JVM的缓存，节省了使用Redis的网络开销。
