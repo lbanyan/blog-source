@@ -48,6 +48,60 @@ for(String entry : map.descendingKeySet()) {
 System.out.println(map);
 ```
 注意ConcurrentSkipListMap是根据key的Comparator来比较的，而非根据value来比较，具体可以参考 [并发容器Map之二：ConcurrentSkipListMap](http://www.cnblogs.com/duanxz/archive/2012/08/27/2658004.html)
+根据上述理解，需构造implements Comparable的key SortableObject：
+``` java
+public static class SortableObject implements Comparable{
+    
+    /**
+    * 主播ID
+    */
+    public String id;
+    /**
+     * 在线观看该主播直播的用户数（score是类似 redis sorted set 的 score 概念）
+     */
+    public Long score;
+
+    public SortableObject(String id, Long score) {
+        this.id = id;
+        this.score = score;
+    }
+
+    @Override
+    public int compareTo(Object obj) {
+        if (obj == null || !(obj instanceof SortableObject)) {
+            return 1;
+        }
+        SortableObject o2 = (SortableObject) obj;
+        int d = o2.score.compareTo(score);
+        if (d == 0) {
+            d = id.compareTo(o2.id);
+        }
+        return d;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof SortableObject) {
+            SortableObject o2 = (SortableObject) obj;
+            boolean eq = score.equals(o2.score);
+            if (eq) {
+                eq = id.equals(o2.id);
+            }
+            return eq;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + id + ": " + score + "]";
+    }
+}
+```
+使用ConcurrentSkipListMap<SortableObject, Long> sortedPcuAnchors = new ConcurrentSkipListMap<>();便可完成该方案的功能需求。
 该方案完全利用了JVM的缓存，节省了使用Redis的网络开销。
 
 **小技巧**：使用新对象覆盖ConcurrentMap的老对象时，并不影响正在遍历该老对象的操作。
