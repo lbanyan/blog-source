@@ -46,6 +46,8 @@ public static boolean isCsrf(HttpServletRequest request, String refererDomain) {
 ```
 此方法对于IE6等低版本的浏览器存在风险，如果服务必须支持低版本浏览器，则该方式不可用。
 
+<!--more-->
+
 ### 方法二：token
 网络中的方法比较僵化，以下介绍一种简单的方法：
 用户登录验证成功后，将用户 session 以随机 UUID 为 key 存入缓存中并设置到 Cookie 中，用户在访问非登录页面的服务时，验证该 Cookie 中的 UUID 是否为当前 Session 缓存中的。
