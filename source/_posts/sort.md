@@ -106,6 +106,6 @@ public static class SortableObject implements Comparable{
 
 **小技巧**：使用新对象覆盖ConcurrentMap的老对象时，并不影响正在遍历该老对象的操作。
 
-**小知识**：map和hash没有什么直接关系，map只是key value的数据对，至于十一hash形式存在还是以跳表形式存在，是有具体的如HashMap、SkipListMap实现的。
+**小知识**：map和hash没有什么直接关系，map只是key value的数据对，至于是以hash形式存在还是以红黑树（平衡二叉树）存在或以跳表形式存在，是有具体的如HashMap、TreeMap、SkipListMap实现的。
 
 
