@@ -25,3 +25,6 @@ fi
 
 ## 题外话
 如果需要清空表，可以使用truncate，相比于delete，速度快，且不是事务方式。
+
+## 参考文档
+[MySQL 删除数据 Delete 语句 、Truncate 语句](http://www.xiaoxiaozi.com/2009/09/03/1427/)
