@@ -9,12 +9,11 @@ tags:
 
 ### Git 思想
 1. Git 只关心文件数据的整体是否发生变化，而不关心文件各版本差异变化的细节。Git 使用指纹、快照、索引的方式来进行版本控制。
-
 2. Git 维持了一个本地版本库，这样绝大多数的操作都可以本地完成，而无需网络。速度上有了很大提升。
-
 3. Git 使用 SHA-1 算法计算文件数据的校验和，这便是文件的指纹。
-
 4. 常用的 Git 操作大多仅仅是把数据添加到数据库。例如对文件的删除操作，实际只是添加了一条删除记录到数据库，并没有删除该文件。
+
+<!--more-->
 
 ### 项目初始化到 Git
 ``` bash
@@ -135,6 +134,9 @@ git remote rename pb paul
 git remote rm paul
 ```
 
+### 远程仓库版本回退方法
+可参考 [远程仓库版本回退方法](http://blog.csdn.net/fuchaosz/article/details/52170105)
+
 ### 列显已有的标签
 ``` bash
 git tag
@@ -169,6 +171,9 @@ git log --pretty=oneline
 git push origin v1.5
 git push origin --tags // push所有标签
 ```
+
+### 标签高级使用
+可参考 [通过Tag标签回退版本修复bug](http://blog.csdn.net/fuchaosz/article/details/51698896)，我认为这种方式略为复杂，如果需要控制发布的版本，建议使用以release开头为分支名的分支来简单控制。
 
 ### 自动补全和 Git 命令别名
 可参考[技巧和窍门](http://iissnan.com/progit/html/zh/ch2_7.html "技巧和窍门")。
