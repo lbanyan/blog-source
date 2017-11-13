@@ -21,6 +21,7 @@ git init
 git add *
 git commit -m 'initial project version'
 ```
+commit message：主题 + 修改原因
 
 ### 从现有仓库克隆
 ``` bash
@@ -219,6 +220,12 @@ git branch -D testing // 强制删除分支
 
 ### 远程分支
 TODO
+``` bash
+git checkout -b test // 创建本地test分支
+git push origin test:test // 根据本地test分支创建一个新的远程分支test
+git push origin :test // 删除test远程分支
+git branch -D test // 删除本地test分支
+```
 
 ### 衍合（rebase）
 把在一个分支里提交的改变移到另一个分支里重放一遍。
@@ -229,6 +236,7 @@ git rebase master
 ```
 多分支的衍合，请参考[有趣的衍合](http://iissnan.com/progit/html/zh/ch3_6.html "有趣的衍合")。
 **一旦分支中的提交对象发布到公共仓库，就千万不要对该分支进行衍合操作。**对于这点的解释详见[衍合的风险](http://iissnan.com/progit/html/zh/ch3_6.html "衍合的风险")。TODO
+TODO 衍合之后并没有发现相关代码也更新到master了
 
 ### 采纳来自邮件的补丁
 ``` bash
