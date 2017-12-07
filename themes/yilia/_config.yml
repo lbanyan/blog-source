@@ -2,13 +2,13 @@
 
 menu:
   主页: /
-  #随笔: /tags/随笔
+  所有文章: /
 
 # SubNav
 subnav:
   github: "https://github.com/lbanyan"
   #weibo: "#"
-  #zhihu: "https://www.zhihu.com/people/xingping/activities"
+  zhihu: "https://www.zhihu.com/people/xingping/activities"
   #qq: "#"
   #weixin: "#"
   #jianshu: "#"
