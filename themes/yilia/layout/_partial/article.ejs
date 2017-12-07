@@ -17,7 +17,9 @@
       <% } else { %>
         <%- post.content %>
       <% } %>
-
+      <% if (page.path === "tags/index.html"){ %>
+        <%- partial('_partial/page-tags') %>
+      <% } %>
       <% if ((theme.reward_type === 2 || (theme.reward_type === 1 && post.reward)) && !index){ %>
         <div class="page-reward">
           <a href="javascript:;" class="page-reward-btn tooltip-top">
@@ -87,7 +89,7 @@
       url: config.url+url_for(post.path)
     }) %>
   <% } %>
-  
+
   <% if (theme.wangyiyun){ %>
   <%- partial('post/wangyiyun', {
       key: post.slug,

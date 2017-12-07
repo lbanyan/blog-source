@@ -2,7 +2,8 @@
 
 menu:
   主页: /
-  所有文章: /
+  归档: /archives
+  标签: /tags
 
 # SubNav
 subnav:
