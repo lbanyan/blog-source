@@ -5,7 +5,7 @@ tags:
     - Java.Map
 ---
 
-## 代码示例
+### 代码示例
 ``` java
 Map<String, String> map = Maps.newHashMap();
 map.put("107693789", "s1");
@@ -15,6 +15,6 @@ String value = map.get(938098493);
 System.out.println(value);
 ```
 
-## 问题分析
+### 问题分析
 容易发现，是由于map.get时，误传入了long类型的值。
 此时编译期未报错的原因是map.get接收的是Object类型的参数。

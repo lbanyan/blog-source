@@ -6,12 +6,12 @@ tags:
     - json
 ---
 
-## 举例
+### 举例
 ``` bash
 curl -H "X-Auth-Token:ac477518fc0d4f7da33ca9740211bec8" -X GET https://cloudgw.yyclouds.com/api/rule/list?search={"gid":"LCTQ"}
 ```
 
-## 解析
+### 解析
 上述方式错误，服务端无法成功解析search，当然GET请求参数中使用json也是很不合标准的。
 
 正确的请求方式：

@@ -6,10 +6,10 @@ tags:
     - Map
 ---
 
-## 线程安全的SET
+### 线程安全的SET
 JDK中并没有直接提供线程安全的Set，可以通过使用ConcurrentHashMap来构造，当然最简单的方式是使用Google Guava提供Sets.newConcurrentHashSet()方法来构造。
 
-## 线程安全的Map&lt;String, Set&lt;String&gt;&gt;
+### 线程安全的Map&lt;String, Set&lt;String&gt;&gt;
 使用ConcurrentHashMap&lt;String, Set&lt;String&gt;&gt;，在其value为非线程安全的Set情况下，Map整体非线程安全的。
 例如：A和B线程同时修改此Map相同Key的value，A和B同时得到此value并进行修改，此修改必然会出现线程非安全的隐患。
 

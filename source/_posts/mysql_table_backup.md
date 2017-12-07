@@ -5,7 +5,7 @@ tags:
     - 备份
 ---
 
-## MySQL表备份实现
+### MySQL表备份实现
 可以在服务器上定时跑脚本来实现MySQL表的定时备份。
 ``` bash
 #!/bin/bash
@@ -23,8 +23,8 @@ fi
 #0 4 * * * root /data/mlrequestlog/backup_ml_request_log.sh >/tmp/backup_ml_rquest_log.log 2>&1
 ```
 
-## 题外话
+### 题外话
 如果需要清空表，可以使用truncate，相比于delete，速度快，且不是事务方式。
 
-## 参考文档
+### 参考文档
 [MySQL 删除数据 Delete 语句 、Truncate 语句](http://www.xiaoxiaozi.com/2009/09/03/1427/)

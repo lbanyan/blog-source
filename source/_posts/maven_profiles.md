@@ -8,12 +8,12 @@ tags:
     - Java执行环境
 ---
 
-## 问题背景
+### 问题背景
 项目打包正常，服务器上启动后，抛“ClassNotFoundException:com.sun.xml.internal.xsom.impl.scd.Iterators” 和 “NoClassDefFoundError: com/sun/xml/internal/xsom/impl/scd/Iterators$Map”相关的异常，但本地启动正常。
 
 <!--more-->
 
-## 问题分析
+### 问题分析
 初步怀疑是包冲突导致，但是根据“com.sun.xml.internal.xsom.impl.scd.Iterators”始终无法定位到该类来源于哪个包，多次处理包冲突，依然无果。
 在 [ssm启动问题](http://bbs.csdn.net/topics/392191673) 博文中看到该类源自于tools.jar。
 在项目中查找，发现 tools.jar 是被阿里druid引入的。以下是druid的pom.xml中的一部分：

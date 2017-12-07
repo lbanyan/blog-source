@@ -4,7 +4,7 @@ tags:
     - TreeMap
 ---
 
-## 使用TreeMap的例子
+### 使用TreeMap的例子
 基于key排序：
 ``` java
 Map<Double, String> scoreAnchor = Maps.newTreeMap(new Comparator<Double>() {

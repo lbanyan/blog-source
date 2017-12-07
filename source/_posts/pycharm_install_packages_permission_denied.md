@@ -6,7 +6,7 @@ tags:
     - Permission denied
 ---
 
-## 错误trace
+### 错误trace
 ```
 running install
 
@@ -37,5 +37,5 @@ documentation at:
 Please make the appropriate changes for your system and try again.
 ```
 
-## 问题分析
+### 问题分析
 WIN 10对C:\\\\Program Files (x86)和C:\\\\Program Files目录下有权限限制，可以使用管理员权限打开PyCharm就可以安装正常了。

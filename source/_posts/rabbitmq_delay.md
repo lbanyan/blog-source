@@ -7,7 +7,7 @@ tags:
     - x-dead-letter-routing-key
 ---
 
-## rabbitmq-delayed-message-exchange 插件延迟队列实现
+### rabbitmq-delayed-message-exchange 插件延迟队列实现
 ``` java
 // ... elided code ...
 long delayTime = 5000;
@@ -21,13 +21,13 @@ channel.basicPublish("my-exchange", "", props.build(), messageBodyBytes);
 
 <!--more-->
 
-## 问题及分析
+### 问题及分析
 延迟队列生产者使用 x-delay 设置延迟时长，单位 ms。经测试，此 delayTime 设置过长（未超过 long 限制）时，延迟队列失效，会立刻被消费掉。
 此处应该是该插件有问题，多次尝试后，发现一个有趣的现象，设置 delayTime = 2147483648l * 2 时出现此问题，delayTime = 2147483648l * 2 - 1 时正常，说明该插件使用了 4 个字节用来表示延时时常，delayTime设置过大溢出后，变为负数，导致该消息立即被执行。因而该插件最多只能支持延迟 49 天左右。
 费了这么半天的劲，竟然没有去读它的文档。[rabbitmq-delayed-message-exchange](https://github.com/rabbitmq/rabbitmq-delayed-message-exchange)文档Performance Impact一节已明确说明了这个限制。
 > For each message that crosses an "x-delayed-message" exchange, the plugin will try to determine if the message has to be expired by making sure the delay is within range, ie: Delay > 0, Delay =< ?ERL_MAX_T (In Erlang a timer can be set up to (2^32)-1 milliseconds in the future).
 
-## 使用 x-dead-letter-exchange 和 x-dead-letter-routing-key 实现延迟队列 Bug
+### 使用 x-dead-letter-exchange 和 x-dead-letter-routing-key 实现延迟队列 Bug
 发送延迟消息方法：
 ``` java
 public void pushDelay(String queueName, byte[] message, long delayMillisecond) throws Exception {

@@ -4,10 +4,10 @@ tags:
   - 屏蔽System.out
 ---
 
-## 屏蔽原因
+### 屏蔽原因
 对性能要求很高的项目来说，项目中最好不要使用System.out和System.err，其会带来一定的性能开销。
 
-## 屏蔽方法
+### 屏蔽方法
 ``` java
 public static void redirectSystemOutAndErr() {
 	System.setOut(new PrintStream(new OutputStream() {

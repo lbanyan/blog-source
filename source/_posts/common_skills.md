@@ -2,7 +2,7 @@
 title: 常用技巧
 ---
 
-## Linux
+### Linux
 - less 查看乱码
   less -f -r test.log
 - redis-cli 查看乱码

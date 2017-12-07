@@ -5,12 +5,12 @@ tags:
     - HTTP Referer
 ---
 
-## 前期参考
+### 前期参考
 关于CSRF的基本知识及防御手段请参考：[CSRF 攻击的应对之道](https://www.ibm.com/developerworks/cn/web/1102_niugang_csrf/)
 
-## 防御方法
+### 防御方法
 
-### 方法一：验证 HTTP Referer 字段
+#### 方法一：验证 HTTP Referer 字段
 以下是使用验证 HTTP Referer 字段的方式实现的预防方法：
 ``` java
 /**
@@ -49,13 +49,13 @@ public static boolean isCsrf(HttpServletRequest request, String refererDomain) {
 
 <!--more-->
 
-### 方法二：token
+#### 方法二：token
 网络中的方法比较僵化，以下介绍一种简单的方法：
 用户登录验证成功后，将用户 session 以随机 UUID 为 key 存入缓存中并设置到 Cookie 中，用户在访问非登录页面的服务时，验证该 Cookie 中的 UUID 是否为当前 Session 缓存中的。
 此种方法有两个好处：一是验证了该用户是否已登录，二是作为了CSRF的一种防御手段。
 这种方式主要是利用了使用CSRF的网站无法获取你网站的Cookie的弱点。
 
-### 方法三：验证码
+#### 方法三：验证码
 使用验证码的方式很多：
 - 以手机短信或邮件的方式获取动态验证码来操作
 - 以自己的登录密码或设置专门的密码（如专门的支付密码）作为验证码来操作；
