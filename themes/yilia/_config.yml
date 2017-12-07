@@ -65,6 +65,8 @@ top: true
 # Miscellaneous
 baidu_analytics:
   enable: true
+baidusitemap:
+  path: baidusitemap.xml
 google_analytics:
   enable: true
   id: UA-102681606-1
