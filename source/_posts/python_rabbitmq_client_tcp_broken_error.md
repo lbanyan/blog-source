@@ -1,5 +1,6 @@
 ---
 title: Python RabbitMQ 客户端和服务器端断开连接后，客户端不抛错的问题
+date: 2017-05-25 19:21
 tags:
     - RabbitMQ客户端
     - TCP Keepalive

@@ -1,5 +1,6 @@
 ---
 title: 生产环境MySQL备份表的一种实现
+date: 2017-09-27 17:36
 tags:
     - MySQL
     - 备份

@@ -1,5 +1,6 @@
 ---
 title: CDN原理简述
+date: 2017-10-08 21:36
 tags:
     - CDN
 ---

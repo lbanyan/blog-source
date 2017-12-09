@@ -1,5 +1,6 @@
 ---
 title: RabbitMQ 知识汇总
+date: 2017-11-07 18:55
 tags:
     - RabbitMQ
 ---

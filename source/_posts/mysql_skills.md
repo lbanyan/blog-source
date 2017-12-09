@@ -1,5 +1,6 @@
 ---
 title: MySQL InnoDB使用技巧
+date: 2017-08-27 20:15
 tags:
     - MySQL使用技巧
 ---

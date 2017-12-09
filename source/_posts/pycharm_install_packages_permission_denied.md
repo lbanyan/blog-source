@@ -1,5 +1,6 @@
 ---
 title: WIN 10下PyCharm安装包时报Permission denied
+date: 2017-05-17 19:36
 tags:
     - WIN 10
     - PyCharm

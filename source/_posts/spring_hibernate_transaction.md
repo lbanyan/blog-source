@@ -1,5 +1,6 @@
 ---
 title: Spring、Hibernate事务管理
+date: 2017-05-14 18:56
 tags:
     - Spring
     - Hibernate

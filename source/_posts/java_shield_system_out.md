@@ -1,5 +1,6 @@
 ---
 title: Java：屏蔽项目中System.out和System.err
+date: 2017-09-29 20:01
 tags:
   - 屏蔽System.out
 ---

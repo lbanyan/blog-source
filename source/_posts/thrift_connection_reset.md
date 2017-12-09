@@ -1,5 +1,6 @@
 ---
 title: Thrift服务端Connection Reset by Peer和Broken pipe
+date: 2017-07-31 19:51
 tags:
   - Thrift
   - Broken pipe
