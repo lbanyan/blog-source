@@ -15,6 +15,8 @@ tags:
 3. HTTP pipelining 多路复用，支持请求并行，但不支持返回乱序，会出现第一个请求处理阻塞时，之后请求的返回也会被阻塞的问题（队首阻塞）；
 3. HTTP 2.0 多路复用，支持请求并行，支持返回乱序。
 
+<!--more-->
+
 #### 测试工具推荐
 [WEBPAGETEST](http://www.webpagetest.org/)
 
