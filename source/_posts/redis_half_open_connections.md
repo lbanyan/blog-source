@@ -20,6 +20,8 @@ tags:
 - Java Version: 1.8.0_131
 - Java Jedis Version: 2.9.0
 
+<!--more-->
+
 ### 问题分析
 
 #### 查看该线程是否挂掉了
