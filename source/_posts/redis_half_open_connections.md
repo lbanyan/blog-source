@@ -11,7 +11,7 @@ tags:
 
 生产环境使用 Redis 的 PUBSUB 模式进行参数配置，我的服务起一个单独的线程订阅 Redis 的配置 Key，配置更改通过 Redis Publish 到我的各服务上来完成配置变更。
 
-但运行过程中，经常出现配置未更新的情况，似乎我们的服务并未订阅到 Redis Publish 的信息。根据日志记录，也未看到消息订阅的行为。
+但运行过程中，经常出现配置未更新的情况，似乎我的服务并未订阅到 Redis Publish 的信息。根据日志记录，也未看到消息订阅的处理行为。
 
 生产环境：
 
@@ -27,7 +27,7 @@ tags:
 执行：
 
 ``` bash
-// 查看我的服务的pid
+// 查看我的服务的 pid
 ps aux | grep java | grep mapi
 // 查看 pid = 3005 进程的线程信息
 /usr/local/jdk1.8/bin/jstack 3005
@@ -65,7 +65,17 @@ tcpdump -vv  -i eth0 src port 35264
 
 #### Redis 客户端 Keepalive
 
-Jedis 默认是开启 Keepalive 的，该 Keepalive 工作在七层，由 Jedis 控制和实现，但在订阅模式下为什么没有生效呢？
+Jedis 默认是开启 Keepalive 的，该 Keepalive 工作在 TCP 层，也就是说 Jedis 并没有实现自己的应用层 Keepalive，Linux 默认的 TCP Keepalive 时间为 2 小时。
+
+Jedis 有对 Socket 读超时设置 soTimeout，在配置时，我使用 2000ms 设置了该值，理论上，订阅者读超时，自动断开连接，我会使用新的 Jedis 重新订阅，但是 Jedis 并没有这样执行。
+
+查看 Jedis 源码：
+
+![](/img/redis_half_open/jedis_subscribe.png)
+
+发现订阅模式将 Socket.soTimeout 设置为无效了，也即永不超时。
+
+在 Jedis GitHub Issues [Specify connection timeout for blocking calls #426](https://github.com/xetorthio/jedis/issues/426) 有相关的讨论。当然在 Issues 中还能找到更多关于此类问题的讨论。
 
 
 
