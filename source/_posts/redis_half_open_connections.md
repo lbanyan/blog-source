@@ -81,3 +81,4 @@ Jedis 有对 Socket 读超时设置 soTimeout，在配置时，我使用 2000ms 
 
 这说明我之前写过的一篇文章 [偶尔出现Redis客户端获取不到Redis数据的情况](http://blog.lbanyan.com/redis_blpop_null/) 中的分析可能是错误的，当时应该是由于链路拉的过长，增大了出现半开连接的概率，出现了该问题，而非数据在连接中丢失，但已没有当时的生产环境，故无法考证了。
 
+另外，当使用 Jedis.subscribe 异常时，应关闭该 Jedis 连接，而非复用，相关的原因可以参考 [Maybe serious bug in JedisCluster.subscribe #1376](https://github.com/xetorthio/jedis/issues/1376) 以及正确的处理方式参考 [when jedis use subscribe exception can not be reconnected #1026](https://github.com/xetorthio/jedis/issues/1026)。
