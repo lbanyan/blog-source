@@ -79,5 +79,5 @@ Jedis 有对 Socket 读超时设置 soTimeout，在配置时，我使用 2000ms 
 
 在 Jedis GitHub Issues [Specify connection timeout for blocking calls #426](https://github.com/xetorthio/jedis/issues/426) 有相关的讨论。当然在 Issues 中还能找到更多关于此类问题的讨论。
 
-
+这说明我之前写过的一篇文章 [偶尔出现Redis客户端获取不到Redis数据的情况](http://blog.lbanyan.com/redis_blpop_null/) 中的分析可能是错误的，当时应该是由于链路拉的过长，增大了出现半开连接的概率，出现了该问题，而非数据在连接中丢失，但已没有当时的生产环境，故无法考证了。
 
