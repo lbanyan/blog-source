@@ -31,7 +31,7 @@ tags:
 ``` bash
 // 查看我的服务的 pid
 ps aux | grep java | grep mapi
-// 查看 pid = 3005 进程的线程信息
+// 查到我的服务 pid = 3005，查看该进程的线程信息
 /usr/local/jdk1.8/bin/jstack 3005
 ```
 
