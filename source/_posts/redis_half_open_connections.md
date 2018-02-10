@@ -65,9 +65,11 @@ tcpdump -vv  -i eth0 src port 35264
 
 这边是典型的半开连接问题，具体可参考我的上一篇文章 [检测半开连接](http://blog.lbanyan.com/half_open_connections/)。
 
-#### Redis 客户端 Keepalive
+#### Jedis Keepalive
 
-Jedis 默认是开启 Keepalive 的，该 Keepalive 工作在 TCP 层，也就是说 Jedis 并没有实现自己的应用层 Keepalive，Linux 默认的 TCP Keepalive 时间为 2 小时。
+Jedis 默认是开启 Keepalive 的，该 Keepalive 并非 Jedis 应用层实现的，而是依赖于 TCP 层协议，Linux 默认的 TCP Keepalive 时间为 2 小时。
+
+#### Jedis Socket soTimeout
 
 Jedis 有对 Socket 读超时设置 soTimeout，在配置时，我使用 2000ms 设置了该值，理论上，订阅者读超时，自动断开连接，我会使用新的 Jedis 重新订阅，但是 Jedis 并没有这样执行。
 
@@ -79,6 +81,22 @@ Jedis 有对 Socket 读超时设置 soTimeout，在配置时，我使用 2000ms 
 
 在 Jedis GitHub Issues [Specify connection timeout for blocking calls #426](https://github.com/xetorthio/jedis/issues/426) 有相关的讨论。当然在 Issues 中还能找到更多关于此类问题的讨论。
 
+#### 其他
+
 这说明我之前写过的一篇文章 [偶尔出现Redis客户端获取不到Redis数据的情况](http://blog.lbanyan.com/redis_blpop_null/) 中的分析可能是错误的，当时应该是由于链路拉的过长，增大了出现半开连接的概率，出现了该问题，而非数据在连接中丢失，但已没有当时的生产环境，故无法考证了。
 
 另外，当使用 Jedis.subscribe 异常时，应关闭该 Jedis 连接，而非复用，相关的原因可以参考 [Maybe serious bug in JedisCluster.subscribe #1376](https://github.com/xetorthio/jedis/issues/1376) 以及正确的处理方式参考 [when jedis use subscribe exception can not be reconnected #1026](https://github.com/xetorthio/jedis/issues/1026)。
+
+### 解决方案
+
+#### Jedis 层修改
+
+您可以 fork 一份 Jedis 源码，根据相关 Issues 进行修改，以使 Jedis.subscribe 支持 Socket 读超时，来解决当前问题。
+
+#### 用户层修改
+
+您还可以根据从 JedisPool 中获取的 Jedis，定期执行任意非阻塞命令（推荐使用 ping，对业务没有任何影响），当出现异常时，将所有阻塞读（如：subscribe、blpop）的 Jedis 连接全部关闭，并从 JedisPool 获取新的连接，重新阻塞读，来解决半开连接问题。
+
+这里使用的是 JedisPool 提供的保活策略来做的一种辅助检测，而不是使用“定期执行任意非阻塞命令”来检测的。
+
+有关 JedisPool 保活策略可参考 [Jedis源码分析](https://www.jianshu.com/p/dcf1491afbe7)。
