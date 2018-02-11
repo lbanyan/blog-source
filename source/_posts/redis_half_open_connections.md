@@ -97,6 +97,6 @@ Jedis 有对 Socket 读超时设置 soTimeout，在配置时，我使用 2000ms 
 
 您还可以根据从 JedisPool 中获取的 Jedis，定期执行任意非阻塞命令（推荐使用 ping，对业务没有任何影响），当出现异常时，将所有阻塞读（如：subscribe、blpop）的 Jedis 连接全部关闭，并从 JedisPool 获取新的连接，重新阻塞读（例如执行 subscribe 或 blpop），来解决半开连接问题。此处的非阻塞命令、阻塞命令叫法并不严格，您只需要简单理解即可。
 
-这里使用的是 JedisPool 提供的保活策略来做的一种辅助检测，而不是主要使用“定期执行任意非阻塞命令”来检测的。
+上述的定期检测时间不可过长，否则可能仍会出现阻塞读的半开连接问题。
 
 有关 JedisPool 保活策略可参考 [Jedis源码分析](https://www.jianshu.com/p/dcf1491afbe7)。
