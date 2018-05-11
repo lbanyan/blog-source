@@ -17,3 +17,7 @@ channel.basicQos(2)表示MQ同一时间仅将两条消息给到消费者，即MQ
 现象：重启项目后，队列消费正常，一段时间后，队列没有了消费者。
 channel.basicConsume(queueName, true, consumer) 设置了该 channel autoAck 为 true，表示自动 ACK，如果业务处理出现异常，你希望通过 channel.basicReject(deliveryTag, true) 将消息重新入队，该做法是不正确的，和你之前的设置自相矛盾，在这种情况下，就会发现该队列没有消费者了，但是 MQ 客户端不抛错，仍然处于消费阻塞状态，目前还不清楚为什么 MQ 是这样的逻辑。
 
+### Service层发送MQ消息
+背景：Service层方法A使用了事务，A中向数据库中插入一条记录RecordA，并发送非延时MQ消息，消费端消费该消息，并修改RecordA的部分信息。偶见消费端消费了，但是RecordA并未修改。
+原因：A事务中发送MQ消息后，事务提交前，消费端已消费了该MQ消息，消费时并没有发现RecordA记录（事务尚未提交），因而无法对RecordA修改。
+考虑将发送MQ消息放在Controller层，在A事务提交成功后，再发送MQ消息。
