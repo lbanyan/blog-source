@@ -24,7 +24,7 @@ tags:
 ![](/img/jar_packet_conflict/youzhan_package.png)
 
 ### 解决办法
-使用JarJar工具包统一修改包中类路径。
+使用JarJar工具包统一修改包中类路径。JarJar相关知识可参考： [对第三方 SDK 依赖冲突，重新打个包试试](https://juejin.im/post/596b99ac5188254b547cb94d)。
 如下POM文件：
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -100,7 +100,7 @@ tags:
 ```
 于是，该包结构变为：
 ![](/img/jar_packet_conflict/youzhan_package_fix.png)
-对于FasterXML，需要做特殊处理，在META-INF services中com.fasterxml.jackson.core.JsonFactory和com.fasterxml.jackson.databind.ObjectMapper文件名及文件内容需要统一手动修改为youzan.com.fasterxml.jackson.core.JsonFactory和youzan.com.fasterxml.jackson.databind.ObjectMapper，更改该包版本，并将该包上传到Maven库中，再次引入该包，就大功告成了。这两个Service是JsonFactory和ObjectMapper实现类的配置。
+对于FasterXML，需要做特殊处理，在META-INF services中com.fasterxml.jackson.core.JsonFactory和com.fasterxml.jackson.databind.ObjectMapper文件名及文件内容需要统一手动修改为youzan.com.fasterxml.jackson.core.JsonFactory和youzan.com.fasterxml.jackson.databind.ObjectMapper，更改该包版本，并将该包上传到Maven库中，再次引入该包，就大功告成了。这两个Service是JsonFactory和ObjectMapper实现类的配置，相关技术详见： [聊聊Java SPI机制](https://www.cnblogs.com/doit8791/p/8871832.html) 。
 
 ### 附加说明
 
