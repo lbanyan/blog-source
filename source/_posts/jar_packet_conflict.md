@@ -23,3 +23,86 @@ tags:
 最终发现是open-sdk-java包将fasterxml 2.5版本打在了自己包内部，如下图所示：
 ![](/img/jar_packet_conflict/youzhan_package.png)
 
+### 解决办法
+使用JarJar工具包统一修改包中类路径。
+如下pom文件：
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.github</groupId>
+		<artifactId>mydog-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<groupId>com.youzan</groupId>
+	<artifactId>open-sdk-java</artifactId>
+	<version>2.0.2-fix</version>
+	<dependencies>
+		<dependency>
+			<groupId>com.youzan</groupId>
+			<artifactId>open-sdk-java</artifactId>
+			<version>2.0.2</version>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>jarjar-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jarjar</goal>
+						</goals>
+						<configuration>
+							<includes>
+								<include>com.youzan:open-sdk-java</include>
+							</includes>
+							<rules>
+								<rule>
+									<pattern>com.google.**</pattern>
+									<result>youzan.com.google.@1</result>
+								</rule>
+								<rule>
+									<pattern>com.fasterxml.jackson.**</pattern>
+									<result>youzan.com.fasterxml.jackson.@1</result>
+								</rule>
+								<rule>
+									<pattern>org.apache.**</pattern>
+									<result>youzan.org.apache.@1</result>
+								</rule>
+								<rule>
+									<pattern>org.codehaus.jackson.**</pattern>
+									<result>youzan.org.codehaus.jackson.@1</result>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+```
+配置一个空项目，其pom为上述内容，打包，上传到Maven库中，项目中引用改动后的新包：
+```
+<groupId>com.youzan</groupId>
+<artifactId>open-sdk-java</artifactId>
+<version>2.0.2-fix</version>
+```
+于是，该包结构变为：
+![](/img/jar_packet_conflict/youzhan_package_fix.png)
+对于FasterXML，需要做特殊处理，在META-INF services中com.fasterxml.jackson.core.JsonFactory和com.fasterxml.jackson.databind.ObjectMapper文件名及文件内容需要统一手动修改为youzan.com.fasterxml.jackson.core.JsonFactory和youzan.com.fasterxml.jackson.databind.ObjectMapper，更改该包版本，并将该包上传到maven库中，再次引入该包，就大功告成了。这里是JsonFactory和ObjectMapper实现类的配置。
+
+### 附加说明
+
+#### 将第三方包打入自己Jar中
+可以使用Maven plugin：maven-shade-plugin来实现。
