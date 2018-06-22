@@ -6,11 +6,11 @@ tags:
 ---
 
 ### 背景
-项目中引入fasterxml Jar包后，出现如下图所示的Jar包冲突：
+项目中引入FasterXML Jar包后，出现如下图所示的Jar包冲突：
 ![](/img/jar_packet_conflict/packet_conflict.png)
 通过项目引入的包：
 ![](/img/jar_packet_conflict/external_libraries.png)
-在所有引入的fasterxml包中，只有jackson-annotations为2.8.0，其他均为2.8.8。修改了引入包jackson-annotations为2.8.8后，问题仍然没有解决。
+在所有引入的FasterXML包中，只有jackson-annotations为2.8.0，其他均为2.8.8。修改了引入包jackson-annotations为2.8.8后，问题仍然没有解决。
 
 <!--more-->
 
@@ -20,12 +20,12 @@ tags:
 ```
 [Loaded com.fasterxml.jackson.databind.SerializationConfig from file:/D:/Maven/.m2/com/youzan/open-sdk-java/2.0.2/open-sdk-java-2.0.2.jar]
 ```
-最终发现是open-sdk-java包将fasterxml 2.5版本打在了自己包内部，如下图所示：
+最终发现是open-sdk-java包将FasterXML 2.5版本打在了自己包内部，如下图所示：
 ![](/img/jar_packet_conflict/youzhan_package.png)
 
 ### 解决办法
 使用JarJar工具包统一修改包中类路径。
-如下pom文件：
+如下POM文件：
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -92,7 +92,7 @@ tags:
 	</build>
 </project>
 ```
-配置一个空项目，其pom为上述内容，打包，上传到Maven库中，项目中引用改动后的新包：
+配置一个空项目，其POM为上述内容，打包，上传到Maven库中，项目中引用改动后的新包：
 ```
 <groupId>com.youzan</groupId>
 <artifactId>open-sdk-java</artifactId>
@@ -100,9 +100,9 @@ tags:
 ```
 于是，该包结构变为：
 ![](/img/jar_packet_conflict/youzhan_package_fix.png)
-对于FasterXML，需要做特殊处理，在META-INF services中com.fasterxml.jackson.core.JsonFactory和com.fasterxml.jackson.databind.ObjectMapper文件名及文件内容需要统一手动修改为youzan.com.fasterxml.jackson.core.JsonFactory和youzan.com.fasterxml.jackson.databind.ObjectMapper，更改该包版本，并将该包上传到maven库中，再次引入该包，就大功告成了。这里是JsonFactory和ObjectMapper实现类的配置。
+对于FasterXML，需要做特殊处理，在META-INF services中com.fasterxml.jackson.core.JsonFactory和com.fasterxml.jackson.databind.ObjectMapper文件名及文件内容需要统一手动修改为youzan.com.fasterxml.jackson.core.JsonFactory和youzan.com.fasterxml.jackson.databind.ObjectMapper，更改该包版本，并将该包上传到Maven库中，再次引入该包，就大功告成了。这两个Service是JsonFactory和ObjectMapper实现类的配置。
 
 ### 附加说明
 
 #### 将第三方包打入自己Jar中
-可以使用Maven plugin：maven-shade-plugin来实现。
+可以使用Maven Plugin：maven-shade-plugin来实现。
