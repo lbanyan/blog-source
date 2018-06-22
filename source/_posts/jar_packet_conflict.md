@@ -105,4 +105,5 @@ tags:
 ### 附加说明
 
 #### 将第三方包打入自己Jar中
-可以使用Maven Plugin：maven-shade-plugin来实现。
+可以使用Maven Plugin：maven-shade-plugin来实现，详见 [利用maven-shade-plugin打包包含所有依赖jar包](https://blog.csdn.net/kezhong_wxl/article/details/77622097)。
+如果需要将第三方Jar打入自己Jar内，同时自己的Jar可能被其他项目引用到的，强烈建议使用maven-shade-plugin重命名该第三方Jar的类路径，以防止上述问题出现。
