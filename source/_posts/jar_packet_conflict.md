@@ -111,6 +111,7 @@ tags:
 <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
 ```
 详见 [maven-shade-plugin插件高级用法](http://aitozi.com/2018/04/10/advance-maven-shade-plugin/)
+将指定包排除在外，可以将该包的scope设置为provided。
 
 #### 引入jackson-dataformat-xml包后，部分接口返回XML格式结果
 详见 [spring-mvc引入jackson-dataformat-xml依赖后部分接口返回xml](https://blog.csdn.net/liang16286/article/details/80091466)。
