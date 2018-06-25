@@ -106,7 +106,11 @@ tags:
 
 #### 将第三方包打入自己Jar中
 可以使用Maven Plugin：maven-shade-plugin来实现，详见 [利用maven-shade-plugin打包包含所有依赖jar包](https://blog.csdn.net/kezhong_wxl/article/details/77622097)。
-如果需要将第三方Jar打入自己Jar内，同时自己的Jar可能被其他项目引用到的，强烈建议使用maven-shade-plugin重命名该第三方Jar的类路径，以防止上述问题出现。
+如果需要将第三方Jar打入自己Jar内，同时自己的Jar可能被其他项目引用到的，强烈建议使用maven-shade-plugin重命名该第三方Jar的类路径，以防止上述问题出现。在重命名时，针对SPI，需使用maven-shade-plugin中的转换transformer配置：
+```
+<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+```
+详见 [maven-shade-plugin插件高级用法](http://aitozi.com/2018/04/10/advance-maven-shade-plugin/)
 
 #### 引入jackson-dataformat-xml包后，部分接口返回XML格式结果
 详见 [spring-mvc引入jackson-dataformat-xml依赖后部分接口返回xml](https://blog.csdn.net/liang16286/article/details/80091466)。
