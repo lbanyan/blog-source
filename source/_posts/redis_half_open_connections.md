@@ -97,6 +97,75 @@ Jedis 有对 Socket 读超时设置 soTimeout，在配置时，我使用 2000ms 
 
 您还可以根据从 JedisPool 中获取的 Jedis，定期执行任意非阻塞命令（推荐使用 ping，对业务没有任何影响），当出现异常时，将所有阻塞读（如：subscribe、blpop）的 Jedis 连接全部关闭，并从 JedisPool 获取新的连接，重新阻塞读（例如执行 subscribe 或 blpop），来解决半开连接问题。此处的非阻塞命令、阻塞命令叫法并不严格，您只需要简单理解即可。
 
+```java
+public void subscribe() {
+    
+    Thread thread = new Thread(() -> {
+        while (true) {
+            try {
+                final Jedis jedis1 = redisClient.getJedisPool().getResource();
+                final Jedis jedis2 = redisClient.getJedisPool().getResource();
+                Thread subscribeThread = subscribe(jedis2);
+                while (true) {
+                    try {
+                        jedis1.ping();
+                    } catch (Exception e) {
+                        logger.error(e.getMessage(), e);
+                        try {
+                            redisClient.close(jedis1);
+                            redisClient.close(jedis2);
+                            subscribeThread.interrupt();
+                        } catch (Exception ex) {
+                            logger.error(e.getMessage(), ex);
+                        }
+                        break;
+                    }
+                    ThreadUtil.sleep(1000);
+                }
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
+            ThreadUtil.sleep(1000);
+        }
+    });
+    thread.setDaemon(true);
+    thread.setName("appcmdb-thread-appconfig-ping");
+    thread.start();
+}
+
+/**
+ * 启动一个守护线程，监听配置的变化，利用redis的pubsub模式实现java中的分布式内存
+ *
+ * @return
+ */
+public Thread subscribe(Jedis jedis) {
+
+    Thread thread = new Thread(() -> jedis.subscribe(new JedisPubSub() {
+        @Override
+        public void onMessage(String channel, String message) {
+            // message是{"key":"key",""value":"value"}的json数据
+            // 后台更新一个值后就要publish下
+            try {
+                Conf conf = JsonUtil.readValue(message, Conf.class);
+                String key = conf.getPkey();
+                String value = conf.getPvalue();
+                if (EmptyUtil.isEmpty(value)) {
+                    APP_CONFIG_CACHE.remove(key);
+                } else {
+                    APP_CONFIG_CACHE.put(key, value);
+                }
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
+        }
+    }, RedisKeys.CHANNEL_APP_CONFIG));
+    thread.setDaemon(true);
+    thread.setName("appcmdb-thread-appconfig-subscribe");
+    thread.start();
+    return thread;
+}
+```
+
 上述的定期检测时间不可过长，否则可能仍会出现阻塞读的半开连接问题。
 
 有关 JedisPool 保活策略可参考 [Jedis源码分析](https://www.jianshu.com/p/dcf1491afbe7)。
