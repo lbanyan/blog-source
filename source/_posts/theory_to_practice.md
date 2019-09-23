@@ -68,3 +68,8 @@ public class OTNPhoneMigration extends Migration {
     }
 }
 ```
+
+### Java信号量的使用
+有一个定时任务线程和另一个订阅线程对同一个全局变量huyaIps集合进行操作，定时任务线程会直接覆盖huyaIps，订阅线程会对huyaIps进行add或remove元素操作。
+此处存在并发问题，例如定时任务覆盖huyaIps前一刻，订阅线程修改了huyaIps，然后定时任务覆盖，会导致huyaIps更新不及时，需要等到下一个定时任务同步周期才能被更新（定时任务是全量同步huyaIps，订阅方式是实时变更huyaIps）。
+此时借助信号量Semaphore，许可证为1，两个线程执行前均需要获取许可，只有获取到许可的一方才可以执行。此处两个线程的执行时间很短，用本方法是合适的，不会出现一方严重阻塞另一方的行为。
