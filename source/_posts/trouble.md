@@ -52,4 +52,20 @@ https://skynet-jingwei.huya.com/web.html#/domain/autoidc-jingwei.huya.com/summar
 TODO 故障分析流程
 代码变动->发布变动->web质量->硬件监控->JVM相关
 
-
+### 案例三
+混合云交付平台性能调优
+主机信息：
+``` java
+CPU: E3-1231 / 3.40GHz / 8核
+MEM: 16G
+```
+旧JVM配置：
+``` java
+-Xms1024m -Xmx4048m -Duser.timezone=Asia/Shanghai -Xmn1512m -XX:PermSize=192m -Xss256k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection -XX:LargePageSizeInBytes=128m -XX:+UseFastAccessorMethods -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Duser.timezone=Asia/Shanghai -Dfile.encoding=UTF-8
+```
+新JVM配置：
+``` java
+-Xmx8000M -Xms8000M -XX:MaxMetaspaceSize=512M -XX:MetaspaceSize=512M -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+ParallelRefProcEnabled -Dfile.encoding=UTF-8 -Duser.timezone=Asia/Shanghai -XX:-RestrictContended
+```
+调整后，请求延时和响应延时均大幅下降40%，见下图：
+![](/img/trouble/autoidc_jvm.png)
